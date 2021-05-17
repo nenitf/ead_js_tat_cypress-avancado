@@ -11,5 +11,5 @@ npm i
 ## Execução dos testes
 
 - `npm run cy:open` e escolher arquivo ou `Run all tests`
-- `npm test`
+- `npm test` ou `npm run test:nyan`
 
