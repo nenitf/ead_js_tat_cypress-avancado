@@ -1,3 +1,9 @@
 {
-  "hits": []
+  "hits": [],
+  "nbHits":0,
+  "page":0,
+  "nbPages":0,
+  "hitsPerPage":20,
+  "exhaustiveNbHits":true,
+  "processingTimeMS":2
 }

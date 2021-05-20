@@ -1,0 +1,164 @@
+{
+  "hits": [
+    {
+      "title": "Sample 21",
+      "url": "https://example.com/1",
+      "author": "Author 1",
+      "num_comments": 34,
+      "points": 91,
+      "objectID": 0
+    },
+    {
+      "title": "Sample 22",
+      "url": "https://example.com/2",
+      "author": "Author 2",
+      "num_comments": 55,
+      "points": 98,
+      "objectID": 1
+    },
+    {
+      "title": "Sample 23",
+      "url": "https://example.com/3",
+      "author": "Author 3",
+      "num_comments": 55,
+      "points": 98,
+      "objectID": 2
+    },
+    {
+      "title": "Sample 24",
+      "url": "https://example.com/4",
+      "author": "Author 4",
+      "num_comments": 55,
+      "points": 98,
+      "objectID": 3
+    },
+    {
+      "title": "Sample 25",
+      "url": "https://example.com/5",
+      "author": "Author 5",
+      "num_comments": 55,
+      "points": 98,
+      "objectID": 4
+    },
+    {
+      "title": "Sample 26",
+      "url": "https://example.com/6",
+      "author": "Author 6",
+      "num_comments": 55,
+      "points": 98,
+      "objectID": 5
+    },
+    {
+      "title": "Sample 27",
+      "url": "https://example.com/7",
+      "author": "Author 7",
+      "num_comments": 55,
+      "points": 98,
+      "objectID": 6
+    },
+    {
+      "title": "Sample 28",
+      "url": "https://example.com/8",
+      "author": "Author 8",
+      "num_comments": 55,
+      "points": 98,
+      "objectID": 7
+    },
+    {
+      "title": "Sample 29",
+      "url": "https://example.com/9",
+      "author": "Author 9",
+      "num_comments": 55,
+      "points": 98,
+      "objectID": 8
+    },
+    {
+      "title": "Sample 30",
+      "url": "https://example.com/10",
+      "author": "Author 10",
+      "num_comments": 55,
+      "points": 98,
+      "objectID": 9
+    },
+    {
+      "title": "Sample 31",
+      "url": "https://example.com/11",
+      "author": "Author 11",
+      "num_comments": 55,
+      "points": 98,
+      "objectID": 10
+    },
+    {
+      "title": "Sample 32",
+      "url": "https://example.com/12",
+      "author": "Author 12",
+      "num_comments": 55,
+      "points": 98,
+      "objectID": 11
+    },
+    {
+      "title": "Sample 33",
+      "url": "https://example.com/13",
+      "author": "Author 13",
+      "num_comments": 55,
+      "points": 98,
+      "objectID": 12
+    },
+    {
+      "title": "Sample 34",
+      "url": "https://example.com/14",
+      "author": "Author 14",
+      "num_comments": 55,
+      "points": 98,
+      "objectID": 13
+    },
+    {
+      "title": "Sample 35",
+      "url": "https://example.com/15",
+      "author": "Author 15",
+      "num_comments": 55,
+      "points": 98,
+      "objectID": 14
+    },
+    {
+      "title": "Sample 36",
+      "url": "https://example.com/16",
+      "author": "Author 16",
+      "num_comments": 55,
+      "points": 98,
+      "objectID": 15
+    },
+    {
+      "title": "Sample 37",
+      "url": "https://example.com/17",
+      "author": "Author 17",
+      "num_comments": 55,
+      "points": 98,
+      "objectID": 16
+    },
+    {
+      "title": "Sample 38",
+      "url": "https://example.com/18",
+      "author": "Author 18",
+      "num_comments": 55,
+      "points": 98,
+      "objectID": 17
+    },
+    {
+      "title": "Sample 39",
+      "url": "https://example.com/19",
+      "author": "Author 19",
+      "num_comments": 55,
+      "points": 98,
+      "objectID": 18
+    },
+    {
+      "title": "Sample 40",
+      "url": "https://example.com/20",
+      "author": "Author 20",
+      "num_comments": 55,
+      "points": 98,
+      "objectID": 19
+    }
+  ]
+}
