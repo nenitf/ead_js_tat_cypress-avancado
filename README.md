@@ -15,3 +15,6 @@ npm i
 - `npm run cy:open` e escolher arquivo ou `Run all tests`
 - `npm test` ou `npm run test:nyan`
 
+## Bônus
+
+- [Refatoração com gherkin/cucumber](https://github.com/nenitf/ead_js_tat_cypress-avancado/tree/sbe-bdd-gherkin)
