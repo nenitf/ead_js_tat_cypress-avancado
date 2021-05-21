@@ -2,8 +2,6 @@ import { Before, Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 
 import faker from 'faker'
 
-let aliasCurrentApiCalled = "nada"
-
 //Before(() => {
 //  cy.intercept(
 //    '/api/v1/search?query=React&page=0',
@@ -18,11 +16,10 @@ Given('Acesso à página', () => {
   cy.intercept(
     '/api/v1/search?query=React&page=0',
     { fixture: 'initial' }
-  ).as('initial')
-  aliasCurrentApiCalled = `initial`
+  ).as('apiRequest')
 
   cy.visit('/')
-  cy.wait(`@${aliasCurrentApiCalled}`)
+  cy.wait(`@apiRequest`)
 })
 
 Given('São exibidos {int} itens', (itens) => {
@@ -33,38 +30,35 @@ When('Clico em {string}', (btnLabel) => {
   cy.intercept(
     '**/search**',
     { fixture: 'more20'}
-  ).as('getNextStories')
-  aliasCurrentApiCalled = `getNextStories`
+  ).as('apiRequest')
 
   cy.contains(btnLabel)
     .should('be.visible')
     .click()
 
-  cy.wait(`@${aliasCurrentApiCalled}`)
+  cy.wait(`@apiRequest`)
 })
 
 Then('Vejo {int} itens', (itens) => {
   cy.get('.item').should('have.length', itens)
 })
-
 //////////////////////////////////////
 Given('Ultima pesquisa {string}', (term) => {
   cy.intercept(
     `**/search?query=${term}&page=0`,
     { fixture: 'initial'}
-  ).as(`pesquisaPor_${term}`)
-  aliasCurrentApiCalled = `pesquisaPor_${term}`
+  ).as('apiRequest')
 
   cy.get('#search')
     .should('be.visible')
     .clear()
     .type(`${term}{enter}`)
 
-  cy.wait(`@${aliasCurrentApiCalled}`)
+  cy.wait('@apiRequest')
 })
 
 When('Recarrego a página', () => {
-  cy.visit('/')
+  cy.reload()
 })
 
 Then('Vejo o campo de pesquisa {string}', (term) => {
@@ -72,10 +66,10 @@ Then('Vejo o campo de pesquisa {string}', (term) => {
     .should('have.value', term)
 })
 
-Then('Vejo o resultado da busca por {string}', (term) => {
-  // cy.get(`@pesquisaPor_${term}`).then(req => {
-  // expect(req, 'Requisição anterior deve ter sido feita').to.exist
-  // })
+Then('Aguardo API sobre {string}', (term) => {
+  cy.wait('@apiRequest').then((i) => {
+    cy.wrap(i).its('request.url').should('contain', `query=${term}`)
+  })
 })
 //////////////////////////////////////
 Then('Vejo o rodapé', () => {
@@ -88,8 +82,7 @@ Given('{string} retorna 20 resultados', (term) => {
   cy.intercept(
     `**/search?query=${term}**`,
     { fixture: 'initial'}
-  ).as(`pesquisaPor_${term}`)
-  aliasCurrentApiCalled = `pesquisaPor_${term}`
+  ).as('apiRequest')
 })
 
 When('Pesquiso por {string}', (term) => {
@@ -99,14 +92,21 @@ When('Pesquiso por {string}', (term) => {
     .type(`${term}{enter}`)
 })
 
-Given('API retornou', () => {
-  cy.wait(`@${aliasCurrentApiCalled}`)
-})
-
 Then('Aguardo API', () => {
-  cy.wait(`@${aliasCurrentApiCalled}`)
+  cy.wait('@apiRequest')
 })
 //////////////////////////////////////
+Given('Foi pesquisado por {string}', (term) => {
+  cy.get('#search')
+    .should('be.visible')
+    .clear()
+    .type(`${term}{enter}`)
+})
+
+Given('API retornou', () => {
+  cy.wait('@apiRequest')
+})
+
 Given('Clico em check', () => {
   cy.get('.button-small')
     .first()
@@ -214,8 +214,7 @@ Given('{string} não retorna resultados', (term) => {
   cy.intercept(
     `**/search?query=${term}**`,
     { fixture: 'empty'}
-  ).as(`pesquisaPor_${term}`)
-  aliasCurrentApiCalled = `pesquisaPor_${term}`
+  ).as('apiRequest')
 })
 //////////////////////////////////////
 When('Pesquiso por {string} com enter', (term) => {
@@ -241,8 +240,7 @@ Given('Foi pesquisado por {int} itens', (repeat) => {
     'GET',
     '**/search**',
     { fixture: 'empty' }
-  ).as('getRandomStories')
-  aliasCurrentApiCalled = `getRandomStories`
+  ).as('apiRequest')
 
   Cypress._.times(6, () => {
     const randomWord = faker.random.word()
@@ -251,7 +249,7 @@ Given('Foi pesquisado por {int} itens', (repeat) => {
       .clear()
       .type(`${randomWord}{enter}`)
 
-    cy.wait(`@${aliasCurrentApiCalled}`)
+    cy.wait('@apiRequest')
 
     cy.getLocalStorage('search')
       .should('be.equal', randomWord)
@@ -271,8 +269,15 @@ Given('API retorna erro com {string}', (term) => {
     'GET',
     `**/search?query=${term}**`,
     { statusCode: 500 }
-  ).as(`pesquisaPor_${term}`)
-  aliasCurrentApiCalled = `pesquisaPor_${term}`
+  ).as('apiRequest')
+})
+//////////////////////////////////////
+Given('API não pôde ser acessada', () => {
+  cy.intercept(
+    'GET',
+    `**/search**`,
+    { forceNetworkError: true }
+  ).as('apiRequest')
 })
 
 When('Pesquiso por qualquer coisa', () => {
@@ -282,22 +287,6 @@ When('Pesquiso por qualquer coisa', () => {
     .should('be.visible')
     .clear()
     .type(`${randomWord}{enter}`)
-
-  cy.wait(`@${aliasCurrentApiCalled}`)
-})
-
-Then('Vejo o erro {string}', (erro) => {
-  cy.get(`p:contains(${erro})`)
-    .should('be.visible')
-})
-//////////////////////////////////////
-Given('API não pôde ser acessada', () => {
-  cy.intercept(
-    'GET',
-    `**/search**`,
-    { forceNetworkError: true }
-  ).as(`pesquisaUnica`)
-  aliasCurrentApiCalled = `pesquisaUnica`
 })
 
 Then('Vejo o erro {string}', (erro) => {
@@ -309,17 +298,9 @@ Given('{string} retorna 20 resultados com delay de {int}ms', (term, delay) => {
   cy.intercept(
     `**/search?query=${term}**`,
     { delay, fixture: 'initial' }
-  ).as(`pesquisaPor_${term}`)
-  aliasCurrentApiCalled = `pesquisaPor_${term}`
+  ).as('apiRequest')
 })
 
 Then('Vejo a mensagem de load', () => {
   cy.assertLoadingIsShownAndHidden()
-})
-//////////////////////////////////////
-Given('Foi pesquisado por {string}', (term) => {
-  cy.get('#search')
-    .should('be.visible')
-    .clear()
-    .type(`${term}{enter}`)
 })

@@ -12,7 +12,7 @@ Feature: Hacker Stories
         Given Ultima pesquisa "Cypress"
         When Recarrego a página
         Then Vejo o campo de pesquisa "Cypress"
-        And Vejo o resultado da busca por "Cypress"
+        And Aguardo API sobre "Cypress"
 
     Scenario: shows the footer
         Then Vejo o rodapé
@@ -20,8 +20,7 @@ Feature: Hacker Stories
     Scenario: shows the right data for all rendered stories
         Given "Cypress" retorna 20 resultados
         When Pesquiso por "Cypress"
-        Then Aguardo API
-        And Vejo o resultado da busca por "Cypress"
+        Then Aguardo API sobre "Cypress"
         And Vejo 20 itens
 
     Scenario: shows one story less after dimissing the first one
@@ -67,22 +66,19 @@ Feature: Hacker Stories
     Scenario: shows no story when none is returned
         Given "Redux" não retorna resultados
         When Pesquiso por "Redux"
-        Then Aguardo API
-        And Vejo o resultado da busca por "Redux"
+        Then Aguardo API sobre "Redux"
         And Vejo 0 itens
 
     Scenario: types and hits ENTER
         Given "Cypress" retorna 20 resultados
         When Pesquiso por "Cypress" com enter
-        Then Aguardo API
-        And Vejo o resultado da busca por "Cypress"
+        Then Aguardo API sobre "Cypress"
         And Vejo 20 itens
 
     Scenario: types and clicks the submit button
         Given "Cypress" retorna 20 resultados
         When Pesquiso por "Cypress" com botão Submit
-        Then Aguardo API
-        And Vejo o resultado da busca por "Cypress"
+        Then Aguardo API sobre "Cypress"
         And Vejo 20 itens
 
     Scenario: shows a max of 5 buttons for the last searched terms
